@@ -21,7 +21,7 @@ $platos = $controller->getAllDishes();
 
 <body>
     <h1>Personas</h1>
-    <a href="form_person.php">Crear</a>
+    <a href="form_dishe.php">Crear</a>
     <table>
         <thead>
             <tr>

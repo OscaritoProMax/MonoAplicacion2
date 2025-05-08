@@ -5,7 +5,8 @@ include '../models/entities/dishe.php';
 include '../controllers/DishesController.php';
 
 use App\controllers\DishesController;
-
+$isEdit = isset($dishe); // variable para determinar si es edición
+$action = $isEdit ? "actions/savedishes.php?edit=1" : "actions/savedishes.php";
 $controller = new DishesController();
 
 $id = empty($_GET['id']) ? null : $_GET['id'];
@@ -31,31 +32,32 @@ $persona = empty($id) ? null : $controller->getDishe($id);
         ?>
     </h1>
     <br>
-    <form action="actions/savePerson.php" method="post">
-        <?php
-        if (!empty($id)) {
-            echo '<input type="hidden" name="id" value="' . $id . '">';
-        }
-        ?>
-        <div>
-            <label for="juju">Nombre</label>
-            <input type="text" id="namePerson" name="namePerson" 
-            value="<?php echo empty($persona) ? '' : $persona->get('nombre') ?>" required>
-        </div>
-        <div>
-            <label for="emailPerson">Email</label>
-            <input type="email" id="emailPerson" name="emailPerson" 
-            value="<?php echo empty($persona) ? '' : $persona->get('email') ?>" required>
-        </div>
-        <div>
-            <label for="agePerson">Edad</label>
-            <input type="number" id="agePerson" name="agePerson" 
-            value="<?php echo empty($persona) ? '' : $persona->get('edad') ?>" min="1" required>
-        </div>
-        <div>
-            <button type="submit">Guardar</button>
-        </div>
-    </form>
+    <form action="<?= $action ?>" method="POST">
+    <?php if ($isEdit): ?>
+        <input type="hidden" name="id" value="<?= $dishe->get('id') ?>">
+    <?php endif; ?>
+
+    <label for="description">Descripción:</label>
+    <input type="text" name="description" id="description" required
+           value="<?= $isEdit ? $dishe->get('description') : '' ?>">
+
+    <label for="price">Precio:</label>
+    <input type="number" step="0.01" name="price" id="price" required
+           value="<?= $isEdit ? $dishe->get('price') : '' ?>">
+
+    <?php if (!$isEdit): ?>
+        <label for="idCategory">Categoría:</label>
+        <select name="idCategory" id="idCategory" required>
+            <option value="1">Bebidas</option>
+            <option value="2">Platos principales</option>
+            <option value="3">Postres</option>
+        </select>
+    <?php else: ?>
+        <p><strong>Categoría:</strong> <?= $dishe->get('idCategory') ?> (no editable)</p>
+    <?php endif; ?>
+
+    <button type="submit"><?= $isEdit ? 'Actualizar' : 'Registrar' ?> Plato</button>
+</form>
     <a href="dishes.php">Volver</a>
 </body>
 
