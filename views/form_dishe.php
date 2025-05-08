@@ -1,5 +1,5 @@
 <?php
-include '../models/drivers/conexDB.php';
+require_once '../models/drivers/conexDB.php';
 include '../models/entities/model.php';
 include '../models/entities/dishe.php';
 include '../controllers/DishesController.php';
@@ -32,6 +32,18 @@ $persona = empty($id) ? null : $controller->getDishe($id);
         ?>
     </h1>
     <br>
+    <?php
+        require_once '../models/drivers/conexDB.php';
+        $conex = new \App\models\drivers\ConexDB();
+        $sql = "SELECT * FROM categories";
+        $result = $conex->exeSQL($sql);
+        $categories = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = $row;
+        }
+        $conex->close();
+        ?>
     <form action="<?= $action ?>" method="POST">
     <?php if ($isEdit): ?>
         <input type="hidden" name="id" value="<?= $dishe->get('id') ?>">
@@ -45,16 +57,16 @@ $persona = empty($id) ? null : $controller->getDishe($id);
     <input type="number" step="0.01" name="price" id="price" required
            value="<?= $isEdit ? $dishe->get('price') : '' ?>">
 
-    <?php if (!$isEdit): ?>
-        <label for="idCategory">Categoría:</label>
-        <select name="idCategory" id="idCategory" required>
-            <option value="1">Bebidas</option>
-            <option value="2">Platos principales</option>
-            <option value="3">Postres</option>
-        </select>
-    <?php else: ?>
-        <p><strong>Categoría:</strong> <?= $dishe->get('idCategory') ?> (no editable)</p>
-    <?php endif; ?>
+           <?php if (!$isEdit): ?>
+             <label for="idCategory">Categoría:</label>
+                <select name="idCategory" id="idCategory" required>
+                  <?php foreach ($categories as $cat): ?>
+                 <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <?php else: ?>
+                <p><strong>Categoría:</strong> <?= $dishe->get('idCategory') ?> (no editable)</p>
+            <?php endif; ?>
 
     <button type="submit"><?= $isEdit ? 'Actualizar' : 'Registrar' ?> Plato</button>
 </form>

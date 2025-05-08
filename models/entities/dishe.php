@@ -51,14 +51,26 @@ class Dishes extends Model
     }
 
     
-    public function delete()//esta funcion elimina un plato de la base de datos
-    {
+    public function delete() {
         $conexDb = new ConexDB();
-        $sql = "delete from dishes where id = " . $this->id;
+    
+        // Verificar si el plato está relacionado
+        $sqlCheck = "SELECT COUNT(*) as total FROM dishes WHERE id = " . $this->id;
+        $resCheck = $conexDb->exeSQL($sqlCheck);
+        $row = $resCheck->fetch_assoc();
+    
+        if ($row['total'] > 0) {
+            $conexDb->close();
+            return false; 
+        }
+    
+        // Procede a eliminar
+        $sql = "DELETE FROM dishes WHERE id = " . $this->id;
         $res = $conexDb->exeSQL($sql);
         $conexDb->close();
         return $res;
     }
+    
 
     public function find(){//esta funcion busca un plato por su id en la base de datos
         $conexDb = new ConexDB();
