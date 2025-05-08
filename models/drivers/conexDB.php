@@ -1,5 +1,5 @@
 <?php
-namespace App\models\drivers;
+namespace MonoApp\Models\Drivers;
 
 use mysqli;
 
