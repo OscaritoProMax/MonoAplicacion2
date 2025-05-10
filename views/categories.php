@@ -1,17 +1,15 @@
-<?php
-require_once("models/entities/categories.php");
-use MonoApp\Models\Entities\Categories;
-
-$categorias = Categories::getAll();
-
-if ($categorias) {
-    echo "<h3>Conexión exitosa. Categorías encontradas:</h3>";
-    echo "<ul>";
-    foreach ($categorias as $c) {
-        echo "<li>ID: {$c['id']} - Nombre: {$c['name']}</li>";
-    }
-    echo "</ul>";
-} else {
-    echo "<p>❌ Error: No se encontraron categorías o la conexión falló.</p>";
-}
-?>
+<h2>Categorías</h2>
+<a href="?c=Categoriescontroller&m=form">Agregar nueva categoría</a>
+<table border="1">
+    <tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr>
+    <?php foreach ($categories as $cat): ?>
+        <tr>
+            <td><?= $cat['id'] ?></td>
+            <td><?= $cat['name'] ?></td>
+            <td>
+                <a href="?c=Categoriescontroller&m=form&id=<?= $cat['id'] ?>">Editar</a>
+                <a href="views/actions/deletecategory.php?id=<?= $cat['id'] ?>" onclick="return confirm('¿Eliminar esta categoría?')">Eliminar</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
