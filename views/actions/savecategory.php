@@ -4,6 +4,7 @@ use MonoApp\Models\Entities\Categories;
 
 $cat = new Categories();
 $cat->setName($_POST['name']);
+
 if (!empty($_POST['id'])) {
     $cat->setId($_POST['id']);
     $cat->UpdateCategory();
@@ -14,3 +15,4 @@ if (!empty($_POST['id'])) {
 header("Location: ../../?c=Categoriescontroller&m=index");
 exit;
 ?>
+

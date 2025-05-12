@@ -48,13 +48,14 @@ class Categories
         $conexDb->close();
         return $res;
     }
-
+    
     public static function getById($id) {
         $conexDb = new ConexDB();
         $sql = "SELECT * FROM categories WHERE id = $id";
         $res = $conexDb->exeSQL($sql);
         $conexDb->close();
-        return isset($res[0]) ? $res[0] : null;
+        return isset($res[0]) ? (object)$res[0] : null;
     }
+
 }
 ?>
