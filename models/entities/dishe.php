@@ -1,8 +1,7 @@
 <?php
 
 namespace App\models\entities;
-
-use App\models\drivers\ConexDB;
+use MonoApp\Models\Drivers\ConexDB;
 
 class Dishes extends Model
 {
