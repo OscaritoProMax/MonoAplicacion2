@@ -6,7 +6,8 @@ require_once __DIR__ . '/../models/drivers/ConexDB.php';
 class CategoriesController {
 
     public function index() {
-        $categories = MonoApp\Models\Entities\Categories::getAll();
+        $model = new \MonoApp\Models\Entities\Categories();
+        $categories = $model->all();
         include("views/categories.php");
     }
 
@@ -35,19 +36,23 @@ class CategoriesController {
         header("Location: ?c=Categoriescontroller&m=index");
     }
 
-    public static function getAll() {
-        $conex = new \MonoApp\Models\Drivers\ConexDB();
-        $sql = "SELECT * FROM categories";
-        $result = $conex->exeSQL($sql);
-
-        $categories = [];
-        while ($row = $result->fetch_assoc()) {
-            $categories[] = new \MonoApp\Models\Entities\Categories($row['id'], $row['name']);
+  public function getAll() {
+    $model = new \MonoApp\Models\Entities\Categories();
+    return $model->all();
+}
+    public function delete() {
+        if (isset($_GET['id'])) {
+            $category = new \MonoApp\Models\Entities\Categories();
+            $category->setId($_GET['id']);
+            $category->DeleteCategory();
         }
-
-        $conex->close();
-        return $categories;
+        header("Location: ?c=Categoriescontroller&m=index");
     }
+    public function getById($id) {
+        $model = new \MonoApp\Models\Entities\Categories();
+        return $model->getById($id);
+    }
+    
 
 }
 

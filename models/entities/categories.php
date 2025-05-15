@@ -4,7 +4,9 @@ require_once(__DIR__ . '/../drivers/ConexDB.php');
 use MonoApp\Models\Drivers\ConexDB;
 
 
-class Categories
+require_once(__DIR__ . '/Model.php'); // Add this line to include the Model base class
+
+class Categories 
 {
     protected $id = 0;
     protected $name = '';
@@ -13,8 +15,16 @@ class Categories
         $this->id = $id;
     }
 
+    public function getId() {
+        return $this->id;
+    }
+
     public function setName($name) {
         $this->name = $name;
+    }
+
+    public function getName() {
+        return $this->name;
     }
 
     public function AddCategory() {
@@ -41,13 +51,32 @@ class Categories
         return $res;
     }
 
-    public static function getAll() {
-        $conexDb = new ConexDB();
-        $sql = "SELECT * FROM categories";
-        $res = $conexDb->exeSQL($sql);
-        $conexDb->close();
-        return $res;
+
+    public static function getAllDishe() {
+    $conexDb = new ConexDB();
+    $sql = "SELECT * FROM categories";
+    $res = $conexDb->exeSQL($sql);
+    $conexDb->close();
+    return $res;
+}
+
+  public function all() {
+    $conexDb = new ConexDB();
+    $sql = "SELECT * FROM categories";
+    $result = $conexDb->exeSQL($sql);
+
+    $categories = [];
+    while ($row = $result->fetch_assoc()) {
+        $category = new self();
+        $category->setId($row['id']);
+        $category->setName($row['name']);
+        $categories[] = $category;
     }
+
+    $conexDb->close();
+    return $categories;
+}
+
     
     public static function getById($id) {
         $conexDb = new ConexDB();

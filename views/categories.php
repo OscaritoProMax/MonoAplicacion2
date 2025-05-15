@@ -20,11 +20,11 @@ if (!isset($categories) || !is_array($categories)) {
     <tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr>
     <?php foreach ($categories as $cat): ?>
         <tr>
-            <td><?= $cat['id'] ?></td>
-            <td><?= $cat['name'] ?></td>
+           <td><?= $cat->getId()?></td>
+            <td><?= $cat->getName() ?></td>
             <td>
-                <a href="?c=Categoriescontroller&m=form&id=<?= $cat['id'] ?>">Editar</a>
-                <a href="views/actions/deletecategory.php?id=<?= $cat['id'] ?>" onclick="return confirm('¿Eliminar esta categoría?')">Eliminar</a>
+                <a href="?c=Categoriescontroller&m=form&id=<?= $cat->getId() ?>">Editar</a>
+                <a href="views/actions/deletecategory.php?id=<?= $cat->getId() ?>" onclick="return confirm('¿Eliminar esta categoría?')">Eliminar</a>
             </td>
         </tr>
     <?php endforeach; ?>

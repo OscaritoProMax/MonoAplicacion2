@@ -9,7 +9,7 @@ use App\controllers\DishesController;
 use MonoApp\Models\Entities\Categories;
 
 $controller = new DishesController();
-$categorias = Categories::getAll(); // trae el resultado crudo de la DB
+$categorias = Categories::getAllDishe(); // trae el resultado crudo de la DB
 
 // Si se envió el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
