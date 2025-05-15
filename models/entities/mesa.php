@@ -16,6 +16,17 @@ class Mesa extends Model {
         $this->db = new ConexDB(); // Conexión establecida con tu clase
     }
 
+    // Métodos de acceso (set/get dinámicos)
+    public function set($attribute, $value) {
+        if (property_exists($this, $attribute)) {
+            $this->$attribute = $value;
+        }
+    }
+
+    public function get($attribute) {
+        return $this->$attribute ?? null;
+    }
+
     public function all() {
         $query = "SELECT * FROM restaurant_tables ORDER BY id DESC;";
         return $this->db->exeSQL($query);
