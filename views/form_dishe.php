@@ -1,76 +1,64 @@
 <?php
-require_once '../models/drivers/conexDB.php';
+include '../models/drivers/conexDB.php';
 include '../models/entities/model.php';
 include '../models/entities/dishe.php';
-include '../controllers/DishesController.php';
+include '../models/entities/categories.php';
+include '../controllers/Dishescontroller.php';
 
 use App\controllers\DishesController;
-$isEdit = isset($dishe); // variable para determinar si es edición
-$action = $isEdit ? "actions/savedishes.php?edit=1" : "actions/savedishes.php";
-$controller = new DishesController();
+use MonoApp\Models\Entities\Categories;
 
-$id = empty($_GET['id']) ? null : $_GET['id'];
-$persona = empty($id) ? null : $controller->getDishe($id);
+$controller = new DishesController();
+$categorias = Categories::getAll(); // trae el resultado crudo de la DB
+
+// Si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = [
+        'description' => $_POST['description'],
+        'price' => $_POST['price'],
+        'idCategory' => $_POST['idCategory']
+    ];
+
+    $resultado = $controller->saveNewDishe($data);
+
+    if ($resultado === 'yes') {
+        header('Location: dishes.php');
+        exit;
+    } else {
+        echo "Error al registrar el plato.";
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Nuevo plato</title>
+    <title>Registrar Plato</title>
 </head>
-
 <body>
-    <h1>
-        <?php
-        if (empty($id)) {
-            echo 'Registrar Plato';
-        } else {
-            echo 'Modificar Plato';
-        }
-        ?>
-    </h1>
-    <br>
-    <?php
-        require_once '../models/drivers/conexDB.php';
-        $conex = new \App\models\drivers\ConexDB();
-        $sql = "SELECT * FROM categories";
-        $result = $conex->exeSQL($sql);
-        $categories = [];
+    <h1>Registrar nuevo plato</h1>
+    <form method="post">
+        <label>Descripción:</label>
+        <input type="text" name="description" required><br>
 
-        while ($row = $result->fetch_assoc()) {
-            $categories[] = $row;
-        }
-        $conex->close();
-        ?>
-    <form action="<?= $action ?>" method="POST">
-    <?php if ($isEdit): ?>
-        <input type="hidden" name="id" value="<?= $dishe->get('id') ?>">
-    <?php endif; ?>
+        <label>Precio:</label>
+        <input type="number" name="price" step="0.01" required><br>
 
-    <label for="description">Descripción:</label>
-    <input type="text" name="description" id="description" required
-           value="<?= $isEdit ? $dishe->get('description') : '' ?>">
+        <label>Categoría:</label>
+        <select name="idCategory" required>
+            <option value="">Seleccione...</option>
+            <?php
+            if ($categorias && $categorias->num_rows > 0) {
+                while ($cat = $categorias->fetch_assoc()) {
+                    echo '<option value="' . $cat['id'] . '">' . $cat['name'] . '</option>';
+                }
+            }
+            ?>
+        </select><br><br>
 
-    <label for="price">Precio:</label>
-    <input type="number" step="0.01" name="price" id="price" required
-           value="<?= $isEdit ? $dishe->get('price') : '' ?>">
-
-           <?php if (!$isEdit): ?>
-             <label for="idCategory">Categoría:</label>
-                <select name="idCategory" id="idCategory" required>
-                  <?php foreach ($categories as $cat): ?>
-                 <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
-                <?php endforeach; ?>
-            </select>
-            <?php else: ?>
-                <p><strong>Categoría:</strong> <?= $dishe->get('idCategory') ?> (no editable)</p>
-            <?php endif; ?>
-
-    <button type="submit"><?= $isEdit ? 'Actualizar' : 'Registrar' ?> Plato</button>
-</form>
-    <a href="dishes.php">Volver</a>
+        <button type="submit">Registrar</button>
+        <a href="dishes.php">Cancelar</a>
+    </form>
 </body>
-
 </html>
