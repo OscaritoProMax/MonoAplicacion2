@@ -60,5 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Registrar</button>
         <a href="dishes.php">Cancelar</a>
     </form>
+    <a href="../views/index.php">Volver a Menu Principal</a>
 </body>
 </html>

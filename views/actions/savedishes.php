@@ -49,4 +49,5 @@ if (isset($_GET['edit']) && isset($_POST['id'])) {
 ?>
 
 <a href="../views/dishes.php">Volver a la lista de platos</a>
+<a href="../views/index.php">Volver a Menu Principal</a>
  

@@ -1,5 +1,8 @@
 <?php
-require_once("models/entities/categories.php");
+require_once __DIR__ . '/../models/entities/categories.php';
+require_once __DIR__ . '/../models/drivers/ConexDB.php';
+
+
 class CategoriesController {
 
     public function index() {
@@ -30,6 +33,20 @@ class CategoriesController {
         }
 
         header("Location: ?c=Categoriescontroller&m=index");
+    }
+
+    public static function getAll() {
+        $conex = new \MonoApp\Models\Drivers\ConexDB();
+        $sql = "SELECT * FROM categories";
+        $result = $conex->exeSQL($sql);
+
+        $categories = [];
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = new \MonoApp\Models\Entities\Categories($row['id'], $row['name']);
+        }
+
+        $conex->close();
+        return $categories;
     }
 
 }

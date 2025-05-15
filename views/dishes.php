@@ -67,6 +67,8 @@ if ($searchId) {
                 echo '<tr><td colspan="5">No se encontraron platos.</td></tr>';
             }
             ?>
+            <br>
+            <a href="../views/index.php">Volver a Menu Principal</a>
         </tbody>
     </table>
 </body>
