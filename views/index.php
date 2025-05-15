@@ -14,6 +14,7 @@
     <ul class="menu-links">
       <li><a href="/MonoAplicacion2/views/dishes.php">🍽️ Ver Platos</a></li>
       <li><a href="/MonoAplicacion2/views/categories.php">📋 Categorías</a></li>
+
     </ul>
   </div>
 </body>

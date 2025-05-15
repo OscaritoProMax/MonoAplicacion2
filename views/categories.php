@@ -1,31 +1,35 @@
 <?php
-include '../models/drivers/conexDB.php';
-include '../models/entities/model.php';
+session_start();
 include '../models/entities/categories.php';
-include '../controllers/Categoriescontroller.php';
-require_once '../controllers/Categoriescontroller.php';
+use MonoApp\Models\Entities\Categories;
 
-$controller = new CategoriesController();
-$categories = $controller->getAll();
+$categories = Categories::getAll();
 
-if (!isset($categories) || !is_array($categories)) {
-    $categories = [];
+if (isset($_SESSION['msg'])) {
+    echo '<div style="padding:10px; background:#d4edda; color:#155724; border:1px solid #c3e6cb; margin-bottom:15px; border-radius:4px;">'
+        . $_SESSION['msg'] . '</div>';
+    unset($_SESSION['msg']);
 }
 ?>
 
+
 <h2>Categorías</h2>
-<a href="?c=Categoriescontroller&m=form">Agregar nueva categoría</a>
+<a href="form_category.php">Agregar nueva categoría</a>
 
 <table border="1">
     <tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr>
-    <?php foreach ($categories as $cat): ?>
+    <?php while ($cat = $categories->fetch_assoc()): ?>
         <tr>
-           <td><?= $cat->getId()?></td>
-            <td><?= $cat->getName() ?></td>
+            <td><?= $cat['id'] ?></td>
+            <td><?= htmlspecialchars($cat['name']) ?></td>
             <td>
-                <a href="?c=Categoriescontroller&m=form&id=<?= $cat->getId() ?>">Editar</a>
-                <a href="views/actions/deletecategory.php?id=<?= $cat->getId() ?>" onclick="return confirm('¿Eliminar esta categoría?')">Eliminar</a>
+                <a href="form_category.php?id=<?= $cat['id'] ?>">Editar</a> |
+                <a href="actions/deletecategory.php?id=<?= $cat['id'] ?>" onclick="return confirm('¿Eliminar esta categoría?')">Eliminar</a>
             </td>
         </tr>
-    <?php endforeach; ?>
+    <?php endwhile; ?>
 </table>
+
+<br>
+<a href="index.php">Volver al menú principal</a>
+ 
