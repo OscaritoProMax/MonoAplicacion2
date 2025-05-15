@@ -9,7 +9,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>Bienvenido a Restaurante</h1>
+    <h1>Bienvenido a </h1>
+    <h1> Syntax Deli</h1>
     <p>Disfruta de nuestra deliciosa variedad de platos</p>
     <ul class="menu-links">
       <li><a href="/MonoAplicacion2/views/dishes.php">🍽️ Ver Platos</a></li>
