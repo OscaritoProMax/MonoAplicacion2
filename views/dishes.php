@@ -1,4 +1,4 @@
-<?php
+<?php 
 include '../models/drivers/conexDB.php';
 include '../models/entities/model.php';
 include '../models/entities/dishe.php';
@@ -6,9 +6,17 @@ include '../controllers/Dishescontroller.php';
 
 use App\controllers\DishesController;
 
-
 $controller = new DishesController();
-$platos = $controller->getAllDishes();
+
+// Verificar si se está buscando un ID específico
+$searchId = $_GET['search'] ?? null;
+
+if ($searchId) {
+    $plato = $controller->getDishe((int)$searchId); // Corrección del método y variable
+    $platos = $plato ? [$plato] : [];
+} else {
+    $platos = $controller->getAllDishes();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,39 +24,47 @@ $platos = $controller->getAllDishes();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dishes</title>
+    <title>Platos</title>
 </head>
 
 <body>
-    <h1>Personas</h1>
+    <h1>Platos</h1>
     <a href="form_dishe.php">Crear</a>
-    <table>
+    <table border="1" cellpadding="5" cellspacing="0">
         <thead>
             <tr>
-                <td>
-                    <form>
-                        <input type="text" name="search" placeholder="Buscar por nombre" require>
+                <td colspan="5">
+                    <form method="get">
+                        <input type="number" name="search" placeholder="Buscar por ID" required>    
                         <button type="submit">Buscar</button>
                     </form>
                 </td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>ID</th>
+                <th>Descripción</th>
                 <th>Precio</th>
-                <th>Edad</th>
-                
-                <th></th>
+                <th>Categoría</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            foreach ($platos as $plato) {
-                echo '<tr>';
-                echo '  <td>' . $plato->get('description') . '</td>';
-                echo '  <td>' . $plato->get('price') . '</td>';
-                echo '  <td>' . $plato->get('idCategory') . '</td>';
-                echo '  </td>';
-                echo '</tr>';
+            if (!empty($platos)) {
+                foreach ($platos as $plato) {
+                    echo '<tr>';
+                    echo '  <td>' . $plato->get('id') . '</td>';
+                    echo '  <td>' . $plato->get('description') . '</td>';
+                    echo '  <td>' . $plato->get('price') . '</td>';
+                    echo '  <td>' . $plato->get('idCategory') . '</td>';
+                    echo '  <td>';
+                    echo '      <a href="edit_dishe.php?id=' . $plato->get('id') . '">Editar</a> | ';
+                    echo '      <a href="actionss/deletedishes.php?id=' . $plato->get('id') . '" onclick="return confirm(\'¿Seguro que deseas eliminar este plato?\')">Eliminar</a>';
+                    echo '  </td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="5">No se encontraron platos.</td></tr>';
             }
             ?>
         </tbody>

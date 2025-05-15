@@ -6,12 +6,11 @@ use App\models\entities\Dishes;
 
 class DishesController
 {
-
     public function getAllDishes()
     {
         $model = new Dishes();
-        $persons = $model->all();
-        return $persons;
+        $dishes = $model->all(); // <-- antes decía $persons
+        return $dishes;
     }
 
     public function saveNewDishe($resquest)
@@ -24,31 +23,38 @@ class DishesController
         return $res ? 'yes' : 'not';
     }
 
-    public function updateDishe($resquest){
+   public function updateDishe($resquest)
+   {
         $model = new Dishes();
+        $model->set('id', $resquest['id']); // ← ESTO DEBE ESTAR
         $model->set('description', $resquest['description']);
         $model->set('price', $resquest['price']);
         $model->set('idCategory', $resquest['idCategory']);
-        if(empty($model->find())){
-            return "empty";
+    
+        if (empty($model->find())) {
+        return "empty";
         }
-        $res =  $model->update();
+
+        $res = $model->update();
         return $res ? 'yes' : 'not';
     }
 
-    public function removeDishe($id){
+
+    public function removeDishe($id)
+    {
         $model = new Dishes();
         $model->set('id', $id);
-        if(empty($model->find())){
+        if (empty($model->find())) {
             return "empty";
         }
-        $res =  $model->delete();
+        $res = $model->delete();
         return $res ? 'yes' : 'not';
     }
 
-    public function getDishe($id){
+    public function getDishe($id)
+    {
         $model = new Dishes();
         $model->set('id', $id);
-        return $model->find();
+        return $model->find(); // puede devolver un objeto o null
     }
 }
