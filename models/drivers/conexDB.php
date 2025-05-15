@@ -28,8 +28,10 @@ class ConexDB {
         return $this->conex->query($sql);
     }
 
+    
 
 }
+
 
 
 
