@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Restaurante</title>
-<link rel="stylesheet" href="/MonoAplicacion2/views/css/menuprincipal.css">
-
+  <link rel="stylesheet" href="/MonoAplicacion2/views/css/menuprincipal.css">
 </head>
 <body>
   <div class="container">
@@ -16,6 +15,8 @@
       <li><a href="/MonoAplicacion2/views/dishes.php">🍽️ Ver Platos</a></li>
       <li><a href="/MonoAplicacion2/views/categories.php">📋 Categorías</a></li>
       <li><a href="/MonoAplicacion2/views/mesas.php">Mesas</a></li>
+      <li><a href="/MonoAplicacion2/views/form_order.php">🛒 Registrar Nueva Orden</a></li>
+      <li><a href="/MonoAplicacion2/views/orders.php">📄 Ver Órdenes Registradas</a></li>
     </ul>
   </div>
 </body>

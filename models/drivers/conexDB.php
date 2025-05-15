@@ -28,10 +28,10 @@ class ConexDB {
         return $this->conex->query($sql);
     }
 
-    
-
+    public function lastInsertId() {
+        return $this->conex->insert_id;
+    }
 }
-
 
 
 
