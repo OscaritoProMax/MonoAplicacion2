@@ -59,7 +59,7 @@ if ($searchId) {
                     echo '  <td>' . $plato->get('idCategory') . '</td>';
                     echo '  <td>';
                     echo '      <a href="edit_dishe.php?id=' . $plato->get('id') . '">Editar</a> | ';
-                    echo '      <a href="actionss/deletedishes.php?id=' . $plato->get('id') . '" onclick="return confirm(\'¿Seguro que deseas eliminar este plato?\')">Eliminar</a>';
+                    echo '      <a href="actions/deletedishes.php?id=' . $plato->get('id') . '" onclick="return confirm(\'¿Seguro que deseas eliminar este plato?\')">Eliminar</a>';
                     echo '  </td>';
                     echo '</tr>';
                 }
