@@ -35,31 +35,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Registrar Plato</title>
+    <link rel="stylesheet" href="/MonoAplicacion2/views/css/form.css">
 </head>
 <body>
-    <h1>Registrar nuevo plato</h1>
-    <form method="post">
-        <label>Descripción:</label>
-        <input type="text" name="description" required><br>
+    <div class="form-container">
+        <h1>Registrar nuevo plato</h1>
+        <form method="post">
+            <label for="description">Descripción:</label>
+            <input type="text" name="description" id="description" required>
 
-        <label>Precio:</label>
-        <input type="number" name="price" step="0.01" required><br>
+            <label for="price">Precio:</label>
+            <input type="number" name="price" id="price" step="0.01" required>
 
-        <label>Categoría:</label>
-        <select name="idCategory" required>
-            <option value="">Seleccione...</option>
-            <?php
-            if ($categorias && $categorias->num_rows > 0) {
-                while ($cat = $categorias->fetch_assoc()) {
-                    echo '<option value="' . $cat['id'] . '">' . $cat['name'] . '</option>';
+            <label for="idCategory">Categoría:</label>
+            <select name="idCategory" id="idCategory" required>
+                <option value="">Seleccione...</option>
+                <?php
+                if ($categorias && $categorias->num_rows > 0) {
+                    while ($cat = $categorias->fetch_assoc()) {
+                        echo '<option value="' . $cat['id'] . '">' . $cat['name'] . '</option>';
+                    }
                 }
-            }
-            ?>
-        </select><br><br>
+                ?>
+            </select>
 
-        <button type="submit">Registrar</button>
-        <a href="dishes.php">Cancelar</a>
-    </form>
-    <a href="../views/index.php">Volver a Menu Principal</a>
+            <button type="submit">Registrar</button>
+            <a href="dishes.php" class="cancel-link">Cancelar</a>
+        </form>
+        <a href="../views/index.php" class="back-link">Volver a Menú Principal</a>
+    </div>
 </body>
 </html>

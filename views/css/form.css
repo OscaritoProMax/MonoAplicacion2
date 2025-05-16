@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: url('https://png.pngtree.com/thumb_back/fh260/background/20240425/pngtree-top-desk-with-blur-restaurant-background-wooden-table-image_15665383.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.form-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+}
+
+.form-container h1 {
+  font-size: 1.8rem;
+  color: #7b1113;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #4b1e1e;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button[type="submit"],
+a.cancel-link {
+  background-color: #7b1113;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover,
+a.cancel-link:hover {
+  background-color: #a72020;
+}
+
+a.back-link {
+  display: block;
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #7b1113;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a.back-link:hover {
+  color: #a72020;
+}
+
+.estado-anulada {
+    color: #a94442;
+    font-weight: bold;
+    background-color: #f8d7da;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.estado-activa {
+    color: #155724;
+    font-weight: bold;
+    background-color: #d4edda;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* Estilo de tabla general */
+.table-bordered {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+.table-bordered th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Tabla interna para detalles */
+.table-details {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+    background-color: #fdfdfd;
+}
+
+.table-details th,
+.table-details td {
+    border: 1px solid #e0e0e0;
+    padding: 6px 10px;
+    text-align: center;
+}
+
+.table-details th {
+    background-color: #e8f0fe;
+    font-weight: normal;
+}

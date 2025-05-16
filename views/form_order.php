@@ -16,39 +16,56 @@ foreach ($platos as $p) {
 }
 ?>
 
-<h1>Registrar Orden</h1>
+<link rel="stylesheet" href="/MonoAplicacion2/views/css/form.css">
 
-<form action="actions/saveorder.php" method="POST" id="orderForm">
-    <label>Fecha:</label>
-    <input type="date" name="fecha" value="<?= $fechaHoy ?>" required><br><br>
+<div class="form-container">
+    <h1 class="form-title">Registrar Orden</h1>
 
-    <label>Mesa:</label>
-    <select name="id_mesa" required>
-        <?php while ($m = $mesas->fetch_object()): ?>
-            <option value="<?= $m->id ?>"><?= $m->name ?></option>
-        <?php endwhile; ?>
-    </select><br><br>
+    <form action="actions/saveorder.php" method="POST" id="orderForm">
+        <div class="form-group">
+            <label for="fecha">Fecha:</label>
+            <input type="date" name="fecha" id="fecha" value="<?= $fechaHoy ?>" required>
+        </div>
 
-    <h3>Detalle de la Orden</h3>
-    <table id="detalleOrden">
-        <thead>
-            <tr>
-                <th>Plato</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Subtotal</th>
-                <th>Quitar</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <button type="button" onclick="agregarPlato()">Agregar Plato</button><br><br>
+        <div class="form-group">
+            <label for="id_mesa">Mesa:</label>
+            <select name="id_mesa" id="id_mesa" required>
+                <?php while ($m = $mesas->fetch_object()): ?>
+                    <option value="<?= $m->id ?>"><?= $m->name ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
 
-    <strong>Total: $<span id="totalOrden">0.00</span></strong>
-    <input type="hidden" name="total" id="inputTotal"><br><br>
+        <h3 class="form-subtitle">Detalle de la Orden</h3>
+        <table id="detalleOrden" class="styled-table">
+            <thead>
+                <tr>
+                    <th>Plato</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Quitar</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-    <input type="submit" value="Guardar Orden">
-</form>
+        <div class="form-actions">
+            <button type="button" onclick="agregarPlato()" class="btn btn-secondary">➕ Agregar Plato</button>
+        </div>
+
+        <div class="form-total">
+            <strong>Total: $<span id="totalOrden">0.00</span></strong>
+            <input type="hidden" name="total" id="inputTotal">
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="💾 Guardar Orden" class="btn btn-primary">
+        </div>
+    </form>
+
+    <a href="index.php" class="btn btn-back">🔙 Volver</a>
+</div>
 
 <script>
 function agregarPlato() {
@@ -76,7 +93,8 @@ function agregarPlato() {
 
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
-    removeBtn.textContent = "X";
+    removeBtn.textContent = "❌";
+    removeBtn.className = "btn btn-danger";
     removeBtn.onclick = () => {
         row.remove();
         calcularTotal();
@@ -93,11 +111,21 @@ function agregarPlato() {
     platoSelect.onchange = actualizarPrecioYSubtotal;
     cantidadInput.oninput = actualizarPrecioYSubtotal;
 
-    row.appendChild(document.createElement("td")).appendChild(platoSelect);
-    row.appendChild(document.createElement("td")).appendChild(cantidadInput);
-    row.appendChild(document.createElement("td")).appendChild(precioInput);
-    row.appendChild(subtotalCell);
-    row.appendChild(document.createElement("td")).appendChild(removeBtn);
+    const td1 = document.createElement("td");
+    td1.appendChild(platoSelect);
+    const td2 = document.createElement("td");
+    td2.appendChild(cantidadInput);
+    const td3 = document.createElement("td");
+    td3.appendChild(precioInput);
+    const td4 = subtotalCell;
+    const td5 = document.createElement("td");
+    td5.appendChild(removeBtn);
+
+    row.appendChild(td1);
+    row.appendChild(td2);
+    row.appendChild(td3);
+    row.appendChild(td4);
+    row.appendChild(td5);
 
     tbody.appendChild(row);
     actualizarPrecioYSubtotal();
@@ -114,4 +142,3 @@ function calcularTotal() {
 }
 </script>
 
-<a href="index.php">Volver</a>
