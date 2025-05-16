@@ -13,12 +13,13 @@
     <h1>Syntax Deli</h1>
     <p>Disfruta de nuestra deliciosa variedad de platos</p>
     <ul class="menu-links">
-      <li><a href="/MonoAplicacion2/views/dishes.php">🍽️ Ver Platos</a></li>
-      <li><a href="/MonoAplicacion2/views/categories.php">📋 Categorías</a></li>
-      <li><a href="/MonoAplicacion2/views/mesas.php">🪑 🍷 Mesas</a></li>
-      <li><a href="/MonoAplicacion2/views/form_order.php">🛒 Registrar Nueva Orden</a></li>
-      <li><a href="/MonoAplicacion2/views/orders.php">📄 Ver Órdenes Registradas</a></li>
-      <li><a href="/MonoAplicacion2/views/report_form.php">📊 Reporte de Órdenes por Fecha</a></li>
+        <li><a href="/MonoAplicacion2/views/dishes.php">🍽️ Ver Platos</a></li>
+        <li><a href="/MonoAplicacion2/views/categories.php">📋 Categorías</a></li>
+        <li><a href="/MonoAplicacion2/views/mesas.php">🪑 Mesas</a></li>
+        <li><a href="/MonoAplicacion2/views/form_order.php">🛒 Registrar Nueva Orden</a></li>
+        <li><a href="/MonoAplicacion2/views/orders.php">📄 Ver Órdenes Registradas</a></li>
+        <li><a href="/MonoAplicacion2/views/report_form.php">📊 Reporte Órdenes Activas</a></li>
+        <li><a href="/MonoAplicacion2/views/report_cancelled_form.php">📉 Reporte Órdenes Anuladas</a></li>
     </ul>
   </div>
   <br>
