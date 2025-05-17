@@ -1,5 +1,5 @@
 <?php 
-// Archivo: controllers/MesaController.php
+
 
 use App\models\Mesa;
 
@@ -13,9 +13,9 @@ class MesaController {
         require_once 'views/mesas.php';
     }
 
-    // Nuevo método para mostrar formulario en modo creación
+   
     public function new() {
-        $mesa = new Mesa(); // objeto vacío
+        $mesa = new Mesa(); 
         require_once 'views/form_mesa.php';
     }
 
@@ -39,7 +39,7 @@ class MesaController {
                 exit;
             }
         } else {
-            $mesa = new Mesa(); // objeto vacío para nuevo registro
+            $mesa = new Mesa(); 
         }
 
         require_once 'views/form_mesa.php';

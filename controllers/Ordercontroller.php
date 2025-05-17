@@ -1,5 +1,5 @@
 <?php
-require_once 'models/order.php';
+use App\models\entities\Order;
 
 class OrderController {
 

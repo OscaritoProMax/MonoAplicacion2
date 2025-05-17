@@ -82,6 +82,35 @@ public function getTotalCancelled($startDate, $endDate) {
     return $row['total'] ?? 0;
 }
 
+public function getAllWithDetails() {
+    $orders = [];
+
+    $sql = "SELECT * FROM orders ORDER BY dateOrder DESC";
+    $res = $this->db->exeSQL($sql);
+
+    while ($order = $res->fetch_assoc()) {
+        $order['details'] = [];
+
+        $sqlDetails = "SELECT od.*, d.description 
+                       FROM order_details od
+                       JOIN dishes d ON d.id = od.idDish
+                       WHERE od.idOrder = " . $order['id'];
+
+        $resDetails = $this->db->exeSQL($sqlDetails);
+        while ($detail = $resDetails->fetch_assoc()) {
+            $order['details'][] = $detail;
+        }
+
+        $orders[] = $order;
+    }
+
+    return $orders;
+}
+
+public function cancelOrder($id) {
+    $sql = "UPDATE orders SET isCancelled = 1 WHERE id = $id";
+    $this->db->exeSQL($sql);
+}
 
 
 }

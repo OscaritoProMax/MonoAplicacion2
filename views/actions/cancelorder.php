@@ -1,22 +1,17 @@
 <?php
+require_once '../../models/entities/order.php';
+
+
+use App\models\entities\Order;
+
 $redirect = "../orders.php";
 $mensaje = "";
 
 if (!empty($_GET['id'])) {
     $id = (int)$_GET['id'];
-    $filename = __DIR__ . '/anuladas.txt';
-    $anuladas = [];
-
-    if (file_exists($filename)) {
-        $anuladas = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    }
-
-    if (!in_array((string)$id, $anuladas, true)) {
-        file_put_contents($filename, $id . PHP_EOL, FILE_APPEND | LOCK_EX);
-        $mensaje = "Orden anulada correctamente.";
-    } else {
-        $mensaje = "La orden ya está anulada.";
-    }
+    $orderModel = new Order();
+    $orderModel->cancelOrder($id);
+    $mensaje = "Orden anulada correctamente.";
 } else {
     $mensaje = "ID de orden no especificado.";
 }
