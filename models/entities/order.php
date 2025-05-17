@@ -66,5 +66,22 @@ public function getDishesRanking($startDate, $endDate) {
     return $this->db->exeSQL($sql);
 }
 
+public function getCancelledOrders($startDate, $endDate) {
+    $sql = "SELECT id, dateOrder, total FROM orders 
+            WHERE isCancelled = 1 
+            AND dateOrder BETWEEN '$startDate' AND '$endDate'";
+    return $this->db->exeSQL($sql);
+}
+
+public function getTotalCancelled($startDate, $endDate) {
+    $sql = "SELECT SUM(total) as total FROM orders 
+            WHERE isCancelled = 1 
+            AND dateOrder BETWEEN '$startDate' AND '$endDate'";
+    $result = $this->db->exeSQL($sql);
+    $row = $result->fetch_assoc(); // Asegúrate que exeSQL devuelva mysqli_result
+    return $row['total'] ?? 0;
+}
+
+
 
 }

@@ -48,12 +48,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($dish = $dishesRanking->fetch_assoc()): ?>
+                    <?php foreach ($dishesRanking as $dish): ?>
                         <tr>
                             <td><?= htmlspecialchars($dish['plato']) ?></td>
-                            <td><?= $dish['total_vendido'] ?></td>
+                            <td><?= htmlspecialchars($dish['total_vendido']) ?></td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         <?php else: ?>
@@ -61,7 +61,7 @@
         <?php endif; ?>
 
         <br>
-        <a href="report_form.php" class="btn">Volver al formulario</a>
+        
         <a href="../index.php" class="btn">Menú principal</a>
     </div>
 </body>
