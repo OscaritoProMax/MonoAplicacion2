@@ -1,51 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
     <title>Reporte de Órdenes</title>
-    <link rel="stylesheet" href="css/menuprincipal.css" />
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Reporte de Órdenes desde <?= htmlspecialchars($startDate) ?> hasta <?= htmlspecialchars($endDate) ?></h1>
+    <div class="form-container">
+        <h1>Reporte del <?= htmlspecialchars($startDate) ?> al <?= htmlspecialchars($endDate) ?></h1>
 
-        <?php if (empty($orders)): ?>
-            <p>No se encontraron órdenes en este rango de fechas.</p>
-        <?php else: ?>
+        <h2>Órdenes no anuladas</h2>
+        <?php if (!empty($orders)): ?>
             <?php foreach ($orders as $order): ?>
-                <div class="order-card" style="border:1px solid #ccc; margin-bottom: 20px; padding: 10px;">
-                    <h3>Orden #<?= $order['id'] ?> - Mesa <?= $order['idTable'] ?></h3>
-                    <p><strong>Fecha:</strong> <?= $order['dateOrder'] ?></p>
-                    <p><strong>Total:</strong> $<?= number_format($order['total'], 0, ',', '.') ?></p>
-                    <p><strong>Estado:</strong> <span style="color:green;">Activa</span></p>
+                <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc;">
+                    <strong>ID:</strong> <?= $order['id'] ?><br>
+                    <strong>Fecha:</strong> <?= $order['dateOrder'] ?><br>
+                    <strong>Total:</strong> $<?= number_format($order['total'], 2, ',', '.') ?><br>
 
-                    <h4>Detalle:</h4>
-                    <table border="1" cellpadding="5" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Plato</th>
-                                <th>Cantidad</th>
-                                <th>Precio Unitario</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($order['details'] as $item): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($item['description']) ?></td>
-                                    <td><?= $item['quantity'] ?></td>
-                                    <td>$<?= number_format($item['price'], 0, ',', '.') ?></td>
-                                    <td>$<?= number_format($item['quantity'] * $item['price'], 0, ',', '.') ?></td>
-                                </tr>
+                    <details style="margin-top: 5px;">
+                        <summary>Detalles de la orden</summary>
+                        <ul>
+                            <?php foreach ($order['details'] as $detail): ?>
+                                <li>
+                                    <?= htmlspecialchars($detail['description']) ?> - 
+                                    Cantidad: <?= $detail['quantity'] ?> - 
+                                    Precio: $<?= number_format($detail['price'], 2, ',', '.') ?>
+                                </li>
                             <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                        </ul>
+                    </details>
                 </div>
             <?php endforeach; ?>
+        <?php else: ?>
+            <p>No hay órdenes en el rango de fechas seleccionado.</p>
         <?php endif; ?>
 
-        <a href="../report_form.php">Nueva Consulta</a> | <a href="../orders.php">Volver a Órdenes</a>
+        <h2>Total recaudado</h2>
+        <p><strong>$<?= number_format($total, 2, ',', '.') ?></strong></p>
+
+        <h2>Platos más vendidos</h2>
+        <?php if ($dishesRanking && $dishesRanking->num_rows > 0): ?>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Plato</th>
+                        <th>Cantidad Vendida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($dish = $dishesRanking->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($dish['plato']) ?></td>
+                            <td><?= $dish['total_vendido'] ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>No se vendieron platos en este rango.</p>
+        <?php endif; ?>
+
+        <br>
+        <a href="report_form.php" class="btn">Volver al formulario</a>
+        <a href="../index.php" class="btn">Menú principal</a>
     </div>
 </body>
 </html>
+
